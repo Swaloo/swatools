@@ -24,6 +24,13 @@ extern "C" {
 #include <stdbool.h>
 #include <string.h>
 
+// Pipe Services
+typedef void (* pipe_rx_handler)(uint8_t *packet, uint16_t packet_len, uint8_t channel_id);
+int pipe_tx_with_channel(uint8_t *packet, uint16_t packet_len, uint8_t channel_id);
+int pipe_tx(uint8_t *packet, uint16_t packet_len);
+int pipe_rx_register(pipe_rx_handler handler);
+int pipe_rx_unregister(void);
+int airlog(const char *fmt, ...);
 
 // Accel Sensor Services
 #define ACCEL_SAMPLING_10HZ	 		0x00
