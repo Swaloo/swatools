@@ -106,6 +106,9 @@ int led_total_num(uint8_t *num);
 // Syslog
 int syslog(const char *fmt, ...);
 
+// Airlog
+int airlog(const char *fmt, ...);
+
 
 #ifdef __cplusplus
 }

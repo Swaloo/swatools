@@ -22,7 +22,7 @@ timeout_handler(void)
 int main(void)
 {
 	pipe_rx_register(pipe_data_event_handler);
-	timer_register(2000, timeout_handler);
+	timer_register(1000, timeout_handler);
 	while(1)
 	{
 	}
