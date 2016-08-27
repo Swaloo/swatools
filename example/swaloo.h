@@ -20,11 +20,42 @@
 extern "C" {
 #endif
 
-
-
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
+
+// Uart Service
+enum {
+	UART_BAUDRATE_1200 ,
+    UART_BAUDRATE_2400 ,
+    UART_BAUDRATE_4800 , 
+    UART_BAUDRATE_9600 ,
+    UART_BAUDRATE_19200 ,
+    UART_BAUDRATE_38400 ,
+    UART_BAUDRATE_57600 , 
+    UART_BAUDRATE_115200, 
+};
+typedef void (* uart_rx_handler)(uint8_t data);
+typedef struct
+{
+    uint32_t tx;          
+    uint32_t rx;        
+    uint32_t baudrate;   
+} uart_port_t;
+int uart_register(uart_port_t *port, uart_rx_handler handler);
+int uart_send(uint8_t *data, uint32_t length);
+
+// GPIO Services
+#define GPIO_INPUT  			0x00
+#define GPIO_INPUT_PULLUP		0x01
+#define GPIO_INPUT_PULLDOWN		0x02
+
+#define GPIO_LOW  				0x00
+#define GPIO_HIGH  				0x01
+
+int gpio_cfg_output(uint32_t pin, uint8_t high);
+int gpio_cfg_input(uint32_t pin, uint8_t pull);
+
 
 // Pipe Services
 typedef void (* pipe_rx_handler)(uint8_t *packet, uint16_t packet_len, uint8_t channel_id);
