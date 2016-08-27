@@ -11,6 +11,7 @@ accel_data_event_handler(accel_raw_data_t *data)
 int main(void)
 {
 	accel_data_register(accel_data_event_handler);
+	accel_cfg_sampling_rate(ACCEL_SAMPLING_10HZ);
 	while(1)
 	{
 	}
