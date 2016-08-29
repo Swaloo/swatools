@@ -3,7 +3,7 @@
 static void 
 accel_data_event_handler(accel_raw_data_t *data)
 {
-	airlog("time:%u x: %d y: %d z:%d\n", 
+	syslog("time:%u x: %d y: %d z:%d\n", 
 				data->timestamp,
 				data->x, data->y, data->z);
 }

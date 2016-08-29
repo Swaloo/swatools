@@ -3,11 +3,11 @@
 static void 
 pipe_data_event_handler(uint8_t *packet, uint16_t packet_len, uint8_t channel_id)
 {
-	syslog("pipe event channel %d\n", channel_id);
+	airlog("pipe event channel %d\n", channel_id);
 	for (uint8_t i = 0; i < packet_len; i++) {
 		syslog("%2x ", packet[i]);
 	}
-	syslog("\n");
+	airlog("\n");
 }
 
 static void

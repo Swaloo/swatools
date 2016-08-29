@@ -15,7 +15,6 @@
  */
 #ifndef __SWALOO_H_
 #define __SWALOO_H_
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -23,6 +22,27 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
+
+// Scanner Service
+#define ADV_MAX_DATA_SIZE           31			// Maximum size of advertising data in octets.
+#define ADV_TYPE_ADV_IND          	0x00  	    // Connectable undirected.
+#define ADV_TYPE_ADV_DIRECT_IND   	0x01   		// Connectable directed.
+#define ADV_TYPE_ADV_SCAN_IND     	0x02   		// Scannable undirected.
+#define ADV_TYPE_ADV_NONCONN_IND  	0x03   		// Non connectable undirected.
+typedef struct {
+	uint8_t 	peer_address[6];      	 	 	// Bluetooth address of the peer device.
+	uint8_t     data[ADV_MAX_DATA_SIZE];    	// Advertising or scan response data.
+	uint8_t     len;          	  	   			// Advertising or scan response data length.
+	int8_t      rssi;                  			// Received Signal Strength Indication in dBm.
+} scanner_report_t;
+typedef struct {
+	uint8_t	 active;
+	uint32_t interval;
+	uint16_t window;
+} scanner_params_t;
+typedef void (* scanner_handler_t)(scanner_report_t *report, uint8_t scan_rsp, uint8_t type);
+int scanner_register(scanner_params_t *params, scanner_handler_t handler);
+int scanner_unregister(void);
 
 // Uart Service
 enum {
@@ -36,8 +56,7 @@ enum {
     UART_BAUDRATE_115200, 
 };
 typedef void (* uart_rx_handler)(uint8_t data);
-typedef struct
-{
+typedef struct{
     uint32_t tx;          
     uint32_t rx;        
     uint32_t baudrate;   
@@ -55,7 +74,6 @@ int uart_send(uint8_t *data, uint32_t length);
 
 int gpio_cfg_output(uint32_t pin, uint8_t high);
 int gpio_cfg_input(uint32_t pin, uint8_t pull);
-
 
 // Pipe Services
 typedef void (* pipe_rx_handler)(uint8_t *packet, uint16_t packet_len, uint8_t channel_id);
@@ -103,15 +121,11 @@ int led_toggle(uint32_t led);
 int led_status(uint32_t led, uint8_t *status);
 int led_total_num(uint8_t *num);
 
-// Syslog
-int syslog(const char *fmt, ...);
-
-// Airlog
+// Airlog Services
 int airlog(const char *fmt, ...);
 
 
 #ifdef __cplusplus
 }
 #endif
-
 #endif /* __SWALOO_H_ */
