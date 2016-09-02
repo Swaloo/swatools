@@ -55,13 +55,13 @@ enum {
     UART_BAUDRATE_57600 , 
     UART_BAUDRATE_115200, 
 };
-typedef void (* uart_rx_handler)(uint8_t data);
+typedef void (* uart_rx_handler_t)(uint8_t data);
 typedef struct{
     uint32_t tx;          
     uint32_t rx;        
     uint32_t baudrate;   
 } uart_port_t;
-int uart_register(uart_port_t *port, uart_rx_handler handler);
+int uart_register(uart_port_t *port, uart_rx_handler_t handler);
 int uart_send(uint8_t *data, uint32_t length);
 
 // GPIO Services
@@ -76,10 +76,10 @@ int gpio_cfg_output(uint32_t pin, uint8_t high);
 int gpio_cfg_input(uint32_t pin, uint8_t pull);
 
 // Pipe Services
-typedef void (* pipe_rx_handler)(uint8_t *packet, uint16_t packet_len, uint8_t channel_id);
+typedef void (* pipe_rx_handler_t)(uint8_t *packet, uint16_t packet_len, uint8_t channel_id);
 int pipe_tx_with_channel(uint8_t *packet, uint16_t packet_len, uint8_t channel_id);
 int pipe_tx(uint8_t *packet, uint16_t packet_len);
-int pipe_rx_register(pipe_rx_handler handler);
+int pipe_rx_register(pipe_rx_handler_t handler);
 int pipe_rx_unregister(void);
 int airlog(const char *fmt, ...);
 
@@ -101,16 +101,16 @@ typedef struct accel_raw_data {
 	uint32_t timestamp;
 } accel_raw_data_t;
 
-typedef void (* accel_data_handler)(accel_raw_data_t *data);
+typedef void (* accel_data_handler_t)(accel_raw_data_t *data);
 
 int accel_cfg_sampling_rate(uint32_t rate);
 int accel_cfg_scale_range(uint32_t scale);
-int accel_data_register(accel_data_handler handler);
+int accel_data_register(accel_data_handler_t handler);
 int accel_data_unregister(void);
 
 // Timer Services
-typedef void (* timer_timeout_handler)(void);
-int timer_register(uint32_t timeout_ms, timer_timeout_handler handler);
+typedef void (* timer_timeout_handler_t)(void);
+int timer_register(uint32_t timeout_ms, timer_timeout_handler_t handler);
 int timer_reschedule(uint8_t *expired, uint32_t new_timeout_ms);
 int timer_cancel(void);
 
@@ -120,10 +120,6 @@ int led_off(uint32_t led);
 int led_toggle(uint32_t led);
 int led_status(uint32_t led, uint8_t *status);
 int led_total_num(uint8_t *num);
-
-// Airlog Services
-int airlog(const char *fmt, ...);
-
 
 #ifdef __cplusplus
 }
