@@ -15,6 +15,7 @@ int main(void)
 	uart_register(&port, uart_rx_handler);
 	while(1)
 	{
+		app_event_run();
 	}
 	return 0;
 }

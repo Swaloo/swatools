@@ -14,6 +14,7 @@ int main(void)
 	//accel_cfg_sampling_rate(ACCEL_SAMPLING_10HZ);
 	while(1)
 	{
+		app_event_run();
 	}
 	return 0;
 }

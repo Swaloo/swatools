@@ -15,6 +15,7 @@ int main(void)
 	timer_register(500, timeout_handler);
 	while(1)
 	{
+		app_event_run();
 	}
 	return 0;
 }

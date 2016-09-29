@@ -31,6 +31,7 @@ int main(void)
 	airlog("Helloworld \n");
 	while(1)
 	{
+		app_event_run();
 	}
 	return 0;
 }
